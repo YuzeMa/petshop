@@ -17,3 +17,7 @@ Do **not** read all documentation at session start.
 Canonical spec: [`Requirement.md`](Requirement.md)
 
 Other docs are empty templates — fill them as decisions are made, do not assume content.
+
+## Doc sync
+
+Say **update docs** to sync documentation with recent work (see [`.cursor/skills/doc-sync/SKILL.md`](.cursor/skills/doc-sync/SKILL.md)).
