@@ -70,3 +70,7 @@ A Product has:
 - Other complex e-commerce logic beyond what is described above
 
 Some of the above may come up in a live discussion session but are not required for this build.
+
+---
+
+See [docs/INDEX.md](docs/INDEX.md) for documentation navigation.

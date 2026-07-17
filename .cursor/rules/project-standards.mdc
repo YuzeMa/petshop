@@ -1,0 +1,11 @@
+---
+description: PetCircle progressive context loading
+alwaysApply: true
+---
+
+# PetCircle
+
+- Use progressive loading: start at `docs/INDEX.md`, load only relevant docs
+- Do NOT preload all docs at session start
+- Canonical requirements: `Requirement.md` — do not duplicate
+- Other docs are empty templates — do not assume pre-filled content
