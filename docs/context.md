@@ -29,7 +29,7 @@ PetCircle is a prototype shopping cart for a pet e-commerce store. Canonical req
 
 - Phase 1 (high-level architecture design) complete: ADRs [0001–0008](./decisions/README.md), coding principles, roadmap, and backlog.
 - Phase 2 (hello-world scaffolding) complete: `apps/web` static SPA, `apps/api` with `/health` and `/hello`, `packages/api-types` with plain TS hello types, local dotenv config.
-- **Phase 3 in progress** — foundations (P3-0 ESLint/Prettier) done; backend layering defined in [ADR 0013](./decisions/0013-backend-layering.md). **Now:** backend build (P3-3a entities → P3-3b models + `persistence/in-memory/` → P3-3c services). P3-1 ADR + P3-2 plain TS DTOs land before REST endpoints (P3-3d).
+- **Phase 3 in progress** — foundations (P3-0) and backend layers done: entities, models + `persistence/in-memory/`, factory seed, `CartService`/`ProductService` (P3-3a–c; [ADR 0013](./decisions/0013-backend-layering.md)). **Now:** API prep (P3-1 ADR 0009 + P3-2 api-types DTOs) then REST endpoints (P3-3d).
 - **Phase 4 planned** — dedicated validation & error-handling track for Requirement.md lines 59–63 (P4-1–P4-5). Phase 3 embeds validation in cart work; Phase 4 explicitly verifies the requirement end-to-end.
 - **Phase 5 planned** — production & cloud configuration (P5-1, P5-2); was Phase 4.
 - Per-step design decisions (UI library, state management, exact REST paths) are deferred until each backlog item is built.

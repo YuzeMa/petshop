@@ -7,16 +7,6 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — Backend (entity-first; layered per [ADR 0013](./decisions/0013-backend-layering.md)).
-
-| ID    | Item                              | Status  | Notes                                                                        |
-| ----- | --------------------------------- | ------- | ---------------------------------------------------------------------------- |
-| P3-3a | Entities                          | Planned | `Product`, `Cart`, `CartItem`, `Entity` base in `apps/api/src/entities/`     |
-| P3-3b | Seed data + models + persistence  | Planned | 6–10 products, ≥3 categories; `*Model` classes over `persistence/in-memory/` |
-| P3-3c | Cart service logic + unit tests   | Planned | `services/`: add/increment/remove, totals, validation rules                  |
-
-## Next
-
 Phase 3 — API prep + endpoints (before and including P3-3d).
 
 | ID    | Item                                 | Status  | Notes                                                                 |
@@ -85,5 +75,13 @@ Phase 3 — foundations.
 | ID   | Item                           | Status | Notes                                                                              |
 | ---- | ------------------------------ | ------ | ---------------------------------------------------------------------------------- |
 | P3-0 | ESLint + Prettier at repo root | Done   | `eslint.config.js`, `.prettierrc`; `lint` / `format` scripts; ban `any`; was P2-2a |
+
+Phase 3 — Backend layers ([ADR 0013](./decisions/0013-backend-layering.md)).
+
+| ID    | Item                             | Status | Notes                                                                                          |
+| ----- | -------------------------------- | ------ | ---------------------------------------------------------------------------------------------- |
+| P3-3a | Entities                         | Done   | `Entity`, `Product`, `Cart`, `CartItem` in `apps/api/src/entities/`                            |
+| P3-3b | Seed data + models + persistence | Done   | Factory seed (10 products); `*Model` over `Map*Store` in `persistence/in-memory/`; `createModels()` |
+| P3-3c | Cart service logic + unit tests  | Done   | `ProductService` + `CartService`: add/increment/remove, totals, validation                     |
 
 **Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3; P3-1/P3-2 deferred to before P3-3d.
