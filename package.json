@@ -9,6 +9,9 @@
   "scripts": {
     "dev:web": "pnpm --filter @petcircle/web dev",
     "build:web": "pnpm --filter @petcircle/web build",
-    "test:web": "pnpm --filter @petcircle/web test"
+    "test:web": "pnpm --filter @petcircle/web test",
+    "dev:api": "pnpm --filter @petcircle/api dev",
+    "build:api": "pnpm --filter @petcircle/api build",
+    "test:api": "pnpm --filter @petcircle/api test"
   }
 }

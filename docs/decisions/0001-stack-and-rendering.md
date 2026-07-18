@@ -7,7 +7,7 @@
   - Use a **single TypeScript monorepo** with workspaces.
   - **Backend:** Node + TypeScript, a standalone HTTP API.
   - **Frontend:** React + Vite + TypeScript, a **client-side rendered (CSR)** single-page app. **No SSR.**
-  - Layout: `apps/api` (backend), `apps/web` (frontend), `packages/contracts` (shared API contract). See [0002-type-boundary.md](0002-type-boundary.md).
+  - Layout: `apps/api` (backend), `apps/web` (frontend), `packages/api-types` (shared REST types). See [0002-type-boundary.md](0002-type-boundary.md).
 - **Consequences:**
   - CSR keeps the frontend and backend cleanly separated: the API owns domain logic and validation, the SPA owns UI. This directly supports the spec's "clean separation of concerns."
   - No SSR avoids hydration, server-render code paths, and the coupling that a full-stack framework (e.g. Next.js) would introduce. There are no SSR drivers here — no SEO requirement, no content-heavy public pages, no social previews — so the added complexity is not justified.

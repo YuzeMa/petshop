@@ -28,4 +28,4 @@ PetCircle is a prototype shopping cart for a pet e-commerce store. Canonical req
 ## Current State
 
 - Phase 1 (high-level architecture design) documented: ADRs [0001–0008](./decisions/README.md), coding principles, roadmap, and backlog.
-- Phase 2 in progress: `apps/web` hello-world SPA scaffolded (React + Vite + TypeScript + CSS Modules + Vitest). Backend and contracts not started.
+- Phase 2 in progress: `apps/web` hello-world SPA and `apps/api` hello-world API scaffolded. `packages/api-types` holds plain TS response types (Zod deferred to P2-8). FE↔BE connectivity not wired yet (P2-7).
