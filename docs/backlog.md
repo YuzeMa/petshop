@@ -7,13 +7,13 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — Backend (domain-first).
+Phase 3 — Backend (entity-first; layered per [ADR 0013](./decisions/0013-backend-layering.md)).
 
-| ID    | Item                              | Status  | Notes                                                   |
-| ----- | --------------------------------- | ------- | ------------------------------------------------------- |
-| P3-3a | Domain entities                   | Planned | `Product`, `Cart`, `CartItem` in `apps/api/src/domain/` |
-| P3-3b | Seed data + repository interfaces | Planned | 6–10 products, ≥3 categories; in-memory repos           |
-| P3-3c | Cart domain logic + unit tests    | Planned | Add/increment/remove, totals, validation rules          |
+| ID    | Item                              | Status  | Notes                                                                        |
+| ----- | --------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| P3-3a | Entities                          | Planned | `Product`, `Cart`, `CartItem`, `Entity` base in `apps/api/src/entities/`     |
+| P3-3b | Seed data + models + persistence  | Planned | 6–10 products, ≥3 categories; `*Model` classes over `persistence/in-memory/` |
+| P3-3c | Cart service logic + unit tests   | Planned | `services/`: add/increment/remove, totals, validation rules                  |
 
 ## Next
 

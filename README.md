@@ -70,7 +70,35 @@ The API lives in [`apps/api`](apps/api). Shared REST response types live in [`pa
 ```text
 apps/
   api/         Node + Express + TypeScript API
+    src/
+      entities/           DB-row shapes (Product, Cart, CartItem, Entity base)
+      models/             data-access classes (ProductModel, CartModel...)
+      persistence/
+        in-memory/        swappable store (in-memory now, real DB later)
+      services/           business logic (cart rules, totals, validation)
+      routes/             thin HTTP layer (calls services)
   web/         React + Vite + TypeScript SPA
 packages/
   api-types/   REST request/response types (shared by FE and BE)
 ```
+
+## Backend architecture
+
+The API is organized into layers with a single direction of dependency (see [ADR 0013](docs/decisions/0013-backend-layering.md)):
+
+```mermaid
+flowchart TD
+  routes["routes/ - API layer (thin HTTP plumbing)"]
+  services["services/ - business logic (cart rules, totals)"]
+  models["models/ - data-access classes (ProductModel, CartModel...)"]
+  persistence["persistence/in-memory/ - swappable store"]
+  entities["entities/ - DB-row shapes (Product, Cart, CartItem)"]
+  routes --> services --> models --> persistence
+  models -.returns.-> entities
+```
+
+- **entities/** — pure DB-row shapes (data only); map 1:1 to future DB tables.
+- **models/** — ActiveRecord/ORM-style data-access classes (`findAll`/`findById`/`save`/`delete`); the class the app works with. Naming: entity `Product` → model `ProductModel`.
+- **persistence/in-memory/** — the store models talk to; an in-memory `Map` isolated behind an interface so a real DB adapter can replace it with minimal change.
+- **services/** — business logic (add/increment/remove, totals, validation).
+- **routes/** — thin HTTP layer (routing, request/response plumbing only).

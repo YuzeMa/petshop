@@ -17,6 +17,7 @@
 | [0006](0006-testing-strategy.md)             | Testing strategy                           | accepted | Vitest across FE + BE, supertest for Express endpoints                             |
 | [0007](0007-styling.md)                      | Styling                                    | accepted | CSS Modules — scoped, no runtime, no extra deps                                    |
 | [0008](0008-cors-access-policy.md)           | CORS access policy                         | accepted | Express CORS with a config/env-driven origin allowlist                             |
+| [0013](0013-backend-layering.md)             | Backend layered architecture               | accepted | entities/models/persistence/services/routes; in-memory store swappable for a real DB |
 
 ## Planned ADRs
 
