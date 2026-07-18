@@ -89,6 +89,14 @@ apps/web/src/
 - Define the structured 4xx error shape **once** in `packages/api-types` (a single `ApiError` type; plain TS today, Zod schema in P5-3); the API returns it for validation failures and unknown resources.
 - Detailed API conventions (status codes, response envelope) are in **ADR 0009**. Validation rules and frontend error-surfacing are in **ADR 0010** (accepted; Phase 4 done). The standing requirement is that the frontend **surfaces API errors meaningfully — no silent failures**.
 
+## Git / commits
+
+- Default integration branch is **`master`**.
+- Do **not** land multiple small commits on `master` for one feature (WIP, follow-ups, “fix typo”).
+- Do feature work on a branch; **squash** before merge (or squash-rebase locally) so `master` gets **one commit per feature**.
+- Commit message describes the **feature/why**, not a laundry list of micro-steps.
+- Rationale: multi-person collaboration; easy to revert one feature as a whole with a single revert.
+
 ## Other
 
 - **Package manager:** pnpm workspaces. **Module system:** ESM. **Runtime:** Node 22 LTS. See [ADR 0005](./decisions/0005-repository-and-build-tooling.md).

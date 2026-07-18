@@ -28,6 +28,10 @@ pnpm format:check   # Prettier check
 pnpm format         # Prettier write
 ```
 
+## Contributing / Git
+
+Land work on **`master` as one squashed feature commit** (not a stack of small WIP commits), so a feature can be reverted as a whole. Full convention: [`docs/coding-principles.md`](docs/coding-principles.md) (Git / commits).
+
 ## Frontend (hello world)
 
 Run from the **repository root**:
