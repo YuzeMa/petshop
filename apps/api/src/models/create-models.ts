@@ -1,9 +1,10 @@
 import { Cart } from '../entities/cart.js';
 import { GLOBAL_CART_ID } from '../entities/constants.js';
 import { seedProducts } from '../entities/product-factory.js';
-import { MapCartItemStore } from '../persistence/in-memory/map-cart-item-store.js';
-import { MapCartStore } from '../persistence/in-memory/map-cart-store.js';
-import { MapProductStore } from '../persistence/in-memory/map-product-store.js';
+import {
+  createPersistence,
+  type Persistence,
+} from '../persistence/create-persistence.js';
 import { CartItemModel } from './cart-item-model.js';
 import { CartModel } from './cart-model.js';
 import { ProductModel } from './product-model.js';
@@ -16,11 +17,14 @@ export type Models = {
 
 const SEED_BOOTSTRAP_AT = new Date('2026-01-01T00:00:00.000Z');
 
-export function createModels(): Models {
-  const productModel = new ProductModel(new MapProductStore());
-  const cartModel = new CartModel(new MapCartStore());
-  const cartItemModel = new CartItemModel(new MapCartItemStore());
+export function createModels(persistence: Persistence = createPersistence()): Models {
+  const productModel = new ProductModel(persistence.productStore);
+  const cartModel = new CartModel(persistence.cartStore);
+  const cartItemModel = new CartItemModel(persistence.cartItemStore);
 
+  // PROTOTYPE HACK: seed the in-memory store at process start.
+  // There is no real DB/migration yet — this gives the API a catalog + empty cart.
+  // Replace with DB migrations + optional seed scripts when a real adapter lands.
   for (const product of seedProducts()) {
     productModel.save(product);
   }

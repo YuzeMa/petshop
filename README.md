@@ -61,7 +61,28 @@ Manual checks:
 ```bash
 curl http://localhost:3000/health
 curl http://localhost:3000/hello
+curl http://localhost:3000/products
+curl http://localhost:3000/cart
+curl -X POST http://localhost:3000/cart/items \
+  -H 'Content-Type: application/json' \
+  -d '{"productId":"prod-001","quantity":1}'
+curl -X PATCH http://localhost:3000/cart/items/prod-001 \
+  -H 'Content-Type: application/json' \
+  -d '{"quantity":5}'
+curl -X DELETE http://localhost:3000/cart/items/prod-001
 ```
+
+**Startup seed (prototype hack):** on boot, `createModels()` loads 10 products and cart id `1` into the in-memory store. Tests use the same path with a fresh store (no real DB). See [ADR 0009](docs/decisions/0009-api-design-conventions.md).
+
+### Cart APIs
+
+| Method | Path | Notes |
+|--------|------|-------|
+| `GET` | `/products` | Full catalog |
+| `GET` | `/cart` | Current cart (`cartId` `1` via resolver; client does not send cart id) |
+| `POST` | `/cart/items` | Body `{ productId, quantity }` — create or **increment**; returns updated cart |
+| `PATCH` | `/cart/items/:productId` | Body `{ quantity }` — **set** absolute quantity; returns updated cart |
+| `DELETE` | `/cart/items/:productId` | Removes line; returns updated cart |
 
 The API lives in [`apps/api`](apps/api). Shared REST response types live in [`packages/api-types`](packages/api-types).
 
@@ -100,5 +121,6 @@ flowchart TD
 - **entities/** — pure DB-row shapes (data only); map 1:1 to future DB tables.
 - **models/** — ActiveRecord/ORM-style data-access classes (`findAll`/`findById`/`save`/`delete`); the class the app works with. Naming: entity `Product` → model `ProductModel`.
 - **persistence/in-memory/** — the store models talk to; an in-memory `Map` isolated behind an interface so a real DB adapter can replace it with minimal change.
-- **services/** — business logic (add/increment/remove, totals, validation).
-- **routes/** — thin HTTP layer (routing, request/response plumbing only).
+- **services/** — business logic (add/increment/remove, totals, validation); cart methods take `cartId`.
+- **routes/** — thin HTTP layer; `resolveCurrentCartId` then services; map to api-types ([ADR 0009](docs/decisions/0009-api-design-conventions.md)).
+- **Seed-on-boot** — `createModels()` seeds the in-memory adapter at startup (prototype hack).

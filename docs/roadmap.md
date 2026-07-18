@@ -21,18 +21,18 @@
 
 **Backend** (entity-first; layered per [ADR 0013](./decisions/0013-backend-layering.md); unit tests with service logic):
 
-2. Entities — `Product`, `Cart`, `CartItem` in `entities/` (P3-3a)
-3. Seed data + `*Model` classes + `persistence/in-memory/` store (P3-3b)
-4. Cart service logic + unit tests in `services/` (P3-3c)
+2. Entities — `Product`, `Cart`, `CartItem` in `entities/` (P3-3a) — done
+3. Seed data + `*Model` classes + `persistence/in-memory/` store (P3-3b) — done
+4. Cart service logic + unit tests in `services/` (P3-3c) — done
 
 **API prep** (immediately before REST endpoints):
 
-5. API design conventions ADR (P3-1) — **ADR 0009**
-6. Plain TS api-types DTOs + `ApiError` (P3-2)
+5. API design conventions ADR (P3-1) — **ADR 0009** — done
+6. Plain TS api-types DTOs + `ApiError` (P3-2) — done
 
 **Backend HTTP:**
 
-7. REST endpoints + integration tests (P3-3d)
+7. REST endpoints + integration tests (P3-3d) — done
 
 **Frontend** (after backend endpoints exist):
 

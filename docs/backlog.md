@@ -7,16 +7,6 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — API prep + endpoints (before and including P3-3d).
-
-| ID    | Item                                 | Status  | Notes                                                                 |
-| ----- | ------------------------------------ | ------- | --------------------------------------------------------------------- |
-| P3-1  | API design conventions ADR (0009)    | Planned | Paths, status codes, response envelope; decide when building REST API |
-| P3-2  | Plain TS api-types DTOs + `ApiError` | Planned | Product, cart, error wire types; no Zod; after P3-1, before P3-3d     |
-| P3-3d | REST endpoints + integration tests   | Planned | Requirement.md APIs; supertest happy paths + 4xx                      |
-
-## Later
-
 Phase 3 — Frontend.
 
 | ID    | Item                                         | Status  | Notes                                                                      |
@@ -28,6 +18,8 @@ Phase 3 — Frontend.
 | P3-4d | Wire pages to APIs                           | Planned | Add/remove flows, cart updates                                             |
 | P3-6  | Component/interaction tests                  | Planned | List rendering, add/remove, error surfacing                                |
 | P3-7  | OpenAPI spec + browsable API docs            | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P5-3 |
+
+## Later
 
 Phase 4 — Validation & error handling ([`Requirement.md`](../Requirement.md) lines 59–63). P3 implements; P4 verifies explicitly.
 
@@ -84,4 +76,12 @@ Phase 3 — Backend layers ([ADR 0013](./decisions/0013-backend-layering.md)).
 | P3-3b | Seed data + models + persistence | Done   | Factory seed (10 products); `*Model` over `Map*Store` in `persistence/in-memory/`; `createModels()` |
 | P3-3c | Cart service logic + unit tests  | Done   | `ProductService` + `CartService`: add/increment/remove, totals, validation                     |
 
-**Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3; P3-1/P3-2 deferred to before P3-3d.
+Phase 3 — API prep + REST ([ADR 0009](./decisions/0009-api-design-conventions.md)).
+
+| ID    | Item                                 | Status | Notes                                                                 |
+| ----- | ------------------------------------ | ------ | --------------------------------------------------------------------- |
+| P3-1  | API design conventions ADR (0009)    | Done   | Paths, ApiError, current-cart resolver, in-memory seed-on-boot        |
+| P3-2  | Plain TS api-types DTOs + `ApiError` | Done   | Product, cart, error wire types; no Zod                               |
+| P3-3d | REST endpoints + integration tests   | Done   | `/products`, `/cart`, add/remove; supertest usage + 4xx scenarios     |
+
+**Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3.

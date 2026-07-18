@@ -1,1 +1,1 @@
-export const GLOBAL_CART_ID = 'global-cart';
+export const GLOBAL_CART_ID = '1';

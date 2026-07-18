@@ -1,8 +1,8 @@
 import type { CartItem } from '../entities/cart-item.js';
-import { GLOBAL_CART_ID } from '../entities/constants.js';
 import type { Product } from '../entities/product.js';
 import { createCartItem } from '../entities/product-factory.js';
 import type { CartItemModel } from '../models/cart-item-model.js';
+import type { CartModel } from '../models/cart-model.js';
 import type { ProductModel } from '../models/product-model.js';
 import { NotFoundError, ValidationError } from './errors.js';
 
@@ -21,11 +21,14 @@ export type CartView = {
 export class CartService {
   constructor(
     private readonly productModel: ProductModel,
+    private readonly cartModel: CartModel,
     private readonly cartItemModel: CartItemModel,
   ) {}
 
-  getCart(): CartView {
-    const items = this.cartItemModel.findByCartId(GLOBAL_CART_ID);
+  getCart(cartId: string): CartView {
+    this.requireCart(cartId);
+
+    const items = this.cartItemModel.findByCartId(cartId);
     const lines: CartLineView[] = [];
     let grandTotal = 0;
 
@@ -41,13 +44,15 @@ export class CartService {
     }
 
     return {
-      cartId: GLOBAL_CART_ID,
+      cartId,
       lines,
       grandTotal,
     };
   }
 
-  addToCart(productId: string, quantity: number): CartItem {
+  addToCart(cartId: string, productId: string, quantity: number): CartItem {
+    this.requireCart(cartId);
+
     if (!Number.isInteger(quantity) || quantity <= 0) {
       throw new ValidationError('Quantity must be a positive integer');
     }
@@ -58,7 +63,7 @@ export class CartService {
     }
 
     const existing = this.cartItemModel.findByCartIdAndProductId(
-      GLOBAL_CART_ID,
+      cartId,
       productId,
     );
 
@@ -77,14 +82,16 @@ export class CartService {
       return next;
     }
 
-    const created = createCartItem(GLOBAL_CART_ID, productId, quantity);
+    const created = createCartItem(cartId, productId, quantity);
     this.cartItemModel.save(created);
     return created;
   }
 
-  removeFromCart(productId: string): void {
+  removeFromCart(cartId: string, productId: string): void {
+    this.requireCart(cartId);
+
     const existing = this.cartItemModel.findByCartIdAndProductId(
-      GLOBAL_CART_ID,
+      cartId,
       productId,
     );
 
@@ -95,5 +102,42 @@ export class CartService {
     }
 
     this.cartItemModel.delete(existing.id);
+  }
+
+  updateQuantity(
+    cartId: string,
+    productId: string,
+    quantity: number,
+  ): CartItem {
+    this.requireCart(cartId);
+
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+      throw new ValidationError('Quantity must be a positive integer');
+    }
+
+    const existing = this.cartItemModel.findByCartIdAndProductId(
+      cartId,
+      productId,
+    );
+
+    if (!existing) {
+      throw new NotFoundError(
+        `Cart line not found for product: ${productId}`,
+      );
+    }
+
+    const next = createCartItem(existing.cartId, existing.productId, quantity, {
+      id: existing.id,
+      createdAt: existing.createdAt,
+      updatedAt: new Date(),
+    });
+    this.cartItemModel.save(next);
+    return next;
+  }
+
+  private requireCart(cartId: string): void {
+    if (!this.cartModel.findById(cartId)) {
+      throw new NotFoundError(`Cart not found: ${cartId}`);
+    }
   }
 }

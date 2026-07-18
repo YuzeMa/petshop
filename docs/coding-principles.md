@@ -27,9 +27,10 @@ packages/
 - **Backend layering (top → bottom):** `routes/` → `services/` → `models/` → `persistence/`, with `models/` returning `entities/`. See [ADR 0013](./decisions/0013-backend-layering.md).
   - **entities/** — pure DB-row shapes, data only; map 1:1 to future DB tables.
   - **models/** — ActiveRecord/ORM-style data-access classes (`findAll`/`findById`/`save`/`delete`); the class the rest of the app works with. Naming: entity `Product` → model `ProductModel`.
-  - **persistence/in-memory/** — the store the models talk to; an in-memory `Map` isolated behind an interface so a real DB adapter can replace it with minimal change.
-  - **services/** — business logic (cart calculations, add/increment/remove rules, validation).
-  - **routes/** — thin HTTP layer (routing, request/response plumbing only). See [ADR 0004](./decisions/0004-server-framework.md).
+  - **persistence/** — store **ports** (`ProductStore`, …) + adapters. Default adapter is in-memory (`Map*Store`) via `createPersistence()`. A real DB adapter swaps in there only.
+  - **services/** — business logic; cart methods take `cartId` (DB-ready). Validation and totals live here.
+  - **routes/** — thin HTTP layer. Resolve current cart via `resolveCurrentCartId(req)` (hardcoded `'1'` now; cookie later), call services, map to `api-types` DTOs. See [ADR 0004](./decisions/0004-server-framework.md) and [ADR 0009](./decisions/0009-api-design-conventions.md).
+- **Seed-on-boot (prototype hack):** `createModels()` seeds 10 products + cart `'1'` into the in-memory store when the app starts (and when tests call `createModels()`). Not a DB migration — replace when a real adapter lands.
 - **Type boundary:** share **only** REST request/response types via `packages/api-types`. Frontend view/props types and backend domain entities stay local and separate, even when similar, and are **mapped at the boundary** — routes/controllers on the backend, the API client on the frontend. See [ADR 0002](./decisions/0002-type-boundary.md).
 - **Rendering:** client-side rendered SPA, no SSR. See [ADR 0001](./decisions/0001-stack-and-rendering.md).
 
