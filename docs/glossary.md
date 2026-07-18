@@ -3,7 +3,7 @@
 > **Context tier:** L2 | **Index:** [INDEX.md](./INDEX.md)
 > **Purpose:** Define domain terms as they are introduced.
 
-Backend layer terms follow [ADR 0013](./decisions/0013-backend-layering.md). API wire types follow [ADR 0009](./decisions/0009-api-design-conventions.md).
+Backend layer terms follow [ADR 0013](./decisions/0013-backend-layering.md). API wire types follow [ADR 0009](./decisions/0009-api-design-conventions.md). Frontend terms follow [ADR 0011](./decisions/0011-frontend-state-management.md).
 
 | Term | Definition | See also |
 | ---- | ---------- | -------- |
@@ -19,3 +19,8 @@ Backend layer terms follow [ADR 0013](./decisions/0013-backend-layering.md). API
 | Seed-on-boot | Prototype hack: `createModels()` loads 10 products + cart `'1'` into the in-memory store when the app (or a test) starts. | `apps/api/src/models/create-models.ts`, [ADR 0009](./decisions/0009-api-design-conventions.md) |
 | Current cart resolver | `resolveCurrentCartId(req)` — decides which cart is “current”. Hardcoded `'1'` today; cookie later. | `apps/api/src/http/current-cart.ts`, [ADR 0009](./decisions/0009-api-design-conventions.md) |
 | ApiError | Structured API error body: `{ error: { code, message } }`. | `packages/api-types`, [ADR 0009](./decisions/0009-api-design-conventions.md) |
+| Controller (FE) | Thunk-style async functions `(dispatch, api)` that orchestrate a page's fetch/mutation flow and are the **sole dispatcher**; own DTO→view-model mapping. No React imports. | `apps/web/src/pages/*/controller/`, [ADR 0011](./decisions/0011-frontend-state-management.md) |
+| Reducer (FE) | Pure function `(state, action) => state`; the single source of state transitions for a page, driven via `useReducer`. | `apps/web/src/pages/*/state/`, [ADR 0011](./decisions/0011-frontend-state-management.md) |
+| State container (FE) | A page's React Context + `useReducer` provider; exposes `{ state, controller }` (not raw `dispatch`), one instance per page/request. | `apps/web/src/pages/*/state/`, [ADR 0011](./decisions/0011-frontend-state-management.md) |
+| View model | Frontend-local display type mapped from an API DTO at the client boundary; kept separate from wire types. | `apps/web/src/shared/types/`, [ADR 0002](./decisions/0002-type-boundary.md) |
+| Page module | A self-contained frontend page under `pages/` (`api/`, `controller/`, `state/`, `components/`, page component); isolated so it can later become its own MPA/SSR entry. | `apps/web/src/pages/`, [ADR 0011](./decisions/0011-frontend-state-management.md) |

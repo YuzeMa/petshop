@@ -34,6 +34,41 @@ packages/
 - **Type boundary:** share **only** REST request/response types via `packages/api-types`. Frontend view/props types and backend domain entities stay local and separate, even when similar, and are **mapped at the boundary** — routes/controllers on the backend, the API client on the frontend. See [ADR 0002](./decisions/0002-type-boundary.md).
 - **Rendering:** client-side rendered SPA, no SSR. See [ADR 0001](./decisions/0001-stack-and-rendering.md).
 
+## Frontend architecture
+
+Standing rules for `apps/web`; full rationale in [ADR 0011](./decisions/0011-frontend-state-management.md).
+
+```text
+apps/web/src/
+  shared/
+    api/            http client, ApiError parsing, base URL (VITE_API_BASE_URL)
+    types/          cross-page view-model types
+    ui/             shared presentational primitives
+  pages/
+    products/
+      api/          product API calls
+      controller/   thunk-style controller (dispatch, api) - sole dispatcher
+      state/        reducer + Context provider (useReducer)
+      components/   presentational
+      ProductListPage.tsx
+    cart/
+      api/          cart API calls
+      controller/   thunk-style controller (dispatch, api) - sole dispatcher
+      state/        reducer + Context provider (useReducer)
+      components/   presentational
+      CartPage.tsx
+  app/              router + app shell (thin, removable for MPA)
+  main.tsx
+```
+
+- **Routing & isolation:** SPA with `react-router`; each page is a self-contained module under `pages/` so it can later be promoted to its own Vite entry (MPA) or SSR-rendered.
+- **State container:** React Context + `useReducer`, one provider per page. No Redux, no external store. State lives in the reducer; the provider exposes `{ state, controller }` (not raw `dispatch`) and mounts at the page root, so each page/request gets its own instance (no singleton).
+- **Unidirectional flow:** View → Controller → Reducer (via `useReducer`) → state through Context → View.
+- **UI boundary:** the View never calls `dispatch`/context actions directly — it only calls controller methods. The **controller is the sole dispatcher**.
+- **Controller:** thunk-style `(dispatch, api)` functions, no React imports; own the DTO→view-model mapping via a pure mapper (per [ADR 0002](./decisions/0002-type-boundary.md)). State holds data only; currency/price is formatted in the view (`Intl.NumberFormat`).
+- **Cart updates:** pessimistic — mark the line `pending`, call the API, then dispatch the authoritative `CartResponse`.
+- **Testing standard:** reducers unit-tested as pure functions (action → next state); controllers unit-tested with a fake `dispatch` + fake `api`, asserting the actions dispatched — both without React or network.
+
 ## Strong typing
 
 - `strict: true` in a root base `tsconfig`, extended per workspace. Also enable `noUncheckedIndexedAccess`.

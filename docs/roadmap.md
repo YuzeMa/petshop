@@ -39,7 +39,7 @@
 8. API fetch layer + FE↔BE smoke — ex-P2-7 folded in (P3-4a)
 9. UI components (P3-4b)
 10. Pages + routing — Product List, Cart View (P3-4c)
-11. State management ADR + implementation (P3-5) — **ADR 0011**
+11. State management ADR + implementation (P3-5) — **ADR 0011** — ADR decided (per-page React Context + `useReducer`); implementation pending
 12. Wire pages to APIs (P3-4d)
 13. Component/interaction tests (P3-6)
 
@@ -68,3 +68,10 @@ Maps to [`Requirement.md`](../Requirement.md) lines 59–63. Runs after relevant
 3. **FE build-time env** (P5-2) — `VITE_*` injected in CI/cloud build; document Vite mode files (`.env.production`)
 4. **Cloud deployment env** (P5-2) — platform env vars for API (no `.env` in container); document expected vars per environment
 5. **Zod + api-types migration** (P5-3) — schemas + `z.infer`; Vitest schema tests; wire `.parse()` at API boundary
+
+## Future considerations
+
+Not scheduled; captured so the current design stays compatible.
+
+- **MPA + SSR:** the SPA is intentionally page-isolated (see [ADR 0001](./decisions/0001-stack-and-rendering.md) and [ADR 0011](./decisions/0011-frontend-state-management.md)); each page could be promoted to its own Vite entry (MPA) and/or server-rendered if SEO or performance needs appear.
+- **GraphQL:** a possible API-layer alternative to REST if client query needs grow (see [ADR 0003](./decisions/0003-rest-vs-graphql.md)).

@@ -14,7 +14,7 @@ Phase 3 — Frontend.
 | P3-4a | API fetch layer + FE↔BE smoke                | Planned | `apps/web/src/api/`; prove CORS via `GET /hello`; ex-P2-7                  |
 | P3-4b | UI components                                | Planned | Product card, cart line, totals, error banner                              |
 | P3-4c | Pages + routing                              | Planned | Product List Page, Cart View                                               |
-| P3-5  | State management ADR (0011) + implementation | Planned | Surface errors (no silent failures); decide library at this step           |
+| P3-5  | State management implementation (ADR 0011)   | Planned | ADR 0011 **accepted** (per-page React Context + `useReducer`, thunk controllers); implement providers/reducers/controllers; surface errors (no silent failures) |
 | P3-4d | Wire pages to APIs                           | Planned | Add/remove flows, cart updates                                             |
 | P3-6  | Component/interaction tests                  | Planned | List rendering, add/remove, error surfacing                                |
 | P3-7  | OpenAPI spec + browsable API docs            | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P5-3 |
@@ -85,3 +85,12 @@ Phase 3 — API prep + REST ([ADR 0009](./decisions/0009-api-design-conventions.
 | P3-3d | REST endpoints + integration tests   | Done   | `/products`, `/cart`, add/remove; supertest usage + 4xx scenarios     |
 
 **Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3.
+
+## Future considerations
+
+Not scheduled; captured so the current design stays compatible.
+
+| Item | Notes |
+| ---- | ----- |
+| MPA + SSR migration | Promote page-isolated modules to per-page Vite entries and/or server rendering if SEO/perf needs appear; see [ADR 0001](./decisions/0001-stack-and-rendering.md), [ADR 0011](./decisions/0011-frontend-state-management.md) |
+| GraphQL evaluation | Possible API-layer alternative to REST if client query needs grow; see [ADR 0003](./decisions/0003-rest-vs-graphql.md) |

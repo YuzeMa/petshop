@@ -29,7 +29,7 @@ PetCircle is a prototype shopping cart for a pet e-commerce store. Canonical req
 
 - Phase 1 (high-level architecture design) complete: ADRs [0001–0008](./decisions/README.md) (+ [0009](./decisions/0009-api-design-conventions.md), [0013](./decisions/0013-backend-layering.md)), coding principles, roadmap, and backlog.
 - Phase 2 (hello-world scaffolding) complete: `apps/web` static SPA, `apps/api` with `/health` and `/hello`, `packages/api-types`, local dotenv config.
-- **Phase 3 in progress** — backend layers (P3-3a–c) and REST APIs (P3-1/P3-2/P3-3d) done: products/cart endpoints, `ApiError`, in-memory seed-on-boot, supertest coverage. **Now:** frontend (P3-4a…).
+- **Phase 3 in progress** — backend layers (P3-3a–c) and REST APIs (P3-1/P3-2/P3-3d) done: products/cart endpoints, `ApiError`, in-memory seed-on-boot, supertest coverage. Frontend architecture decided ([ADR 0011](./decisions/0011-frontend-state-management.md)): per-page React Context + `useReducer`, thunk-style controllers as sole dispatcher, page-isolated modules that stay MPA/SSR-ready while remaining CSR now (consistent with [ADR 0001](./decisions/0001-stack-and-rendering.md) "No SSR"). **Now:** frontend implementation (P3-4a…).
 - **Phase 4 planned** — dedicated validation & error-handling track for Requirement.md lines 59–63 (P4-1–P4-5). Phase 3 embeds validation in cart work; Phase 4 explicitly verifies the requirement end-to-end.
 - **Phase 5 planned** — production & cloud configuration (P5-1, P5-2); was Phase 4.
-- Per-step design decisions (UI library, state management) are deferred until each backlog item is built.
+- Per-step design decisions (UI library) are deferred until each backlog item is built; frontend state management is now decided ([ADR 0011](./decisions/0011-frontend-state-management.md)).

@@ -18,6 +18,7 @@
 | [0007](0007-styling.md)                      | Styling                                    | accepted | CSS Modules — scoped, no runtime, no extra deps                                    |
 | [0008](0008-cors-access-policy.md)           | CORS access policy                         | accepted | Express CORS with a config/env-driven origin allowlist                             |
 | [0009](0009-api-design-conventions.md)       | API design conventions                     | accepted | REST paths, ApiError, current-cart resolver, in-memory seed-on-boot                |
+| [0011](0011-frontend-state-management.md)    | Frontend state management                  | accepted | Per-page React Context + `useReducer`; thunk controllers (sole dispatcher); pessimistic cart updates |
 | [0013](0013-backend-layering.md)             | Backend layered architecture               | accepted | entities/models/persistence/services/routes; in-memory store swappable for a real DB |
 
 ## Planned ADRs
@@ -27,7 +28,6 @@ Reserved numbers for upcoming backlog items (create the file when the item is bu
 | #    | Title                       | Backlog | Summary                                               |
 | ---- | --------------------------- | ------- | ----------------------------------------------------- |
 | 0010 | Validation & error handling | P4-1    | `ApiError` shape detail, 400 vs 404 refinements       |
-| 0011 | Frontend state management   | P3-5    | Server/client state approach for products and cart    |
 | 0012 | Environment configuration   | P5-1    | 12-factor env precedence, fail-fast config validation |
 
 ## Template
