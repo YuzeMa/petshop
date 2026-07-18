@@ -21,7 +21,7 @@ apps/
       routes/             thin HTTP layer (calls services)
   web/         React + Vite + TS SPA (view/props types live here)
 packages/
-  api-types/   ONLY REST request/response types (+ error shape when added)
+  api-types/   ONLY REST request/response types (+ `ApiError` shape)
 ```
 
 - **Backend layering (top → bottom):** `routes/` → `services/` → `models/` → `persistence/`, with `models/` returning `entities/`. See [ADR 0013](./decisions/0013-backend-layering.md).
@@ -65,6 +65,7 @@ apps/web/src/
 - **UI boundary:** the View never calls `dispatch`/context actions directly — it only calls controller methods. The **controller is the sole dispatcher**.
 - **Controller:** thunk-style `(dispatch, api)` functions, no React imports; own the DTO→view-model mapping via a pure mapper (per [ADR 0002](./decisions/0002-type-boundary.md)). State holds data only; currency/price is formatted in the view (`Intl.NumberFormat`).
 - **Cart updates:** pessimistic — mark the line `pending`, call the API, then dispatch the authoritative `CartResponse`.
+- **Cart − at quantity 1:** prototype CartLine keeps decrement enabled so a further − hits BE validation and the ErrorBanner (see [BL-012](./business-logic.md)).
 - **Testing standard:** reducers unit-tested as pure functions (action → next state); controllers unit-tested with a fake `dispatch` + fake `api`, asserting the actions dispatched — both without React or network.
 
 ## Strong typing
@@ -85,8 +86,8 @@ apps/web/src/
 
 ## Error Handling
 
-- Define the structured 4xx error shape **once** in `packages/api-types` (a single `ApiError` type; plain TS in P3-2, Zod schema in P5-3); the API returns it for validation failures and unknown resources.
-- Detailed API conventions (status codes, response envelope) are decided in **ADR 0009** (P3-1). Validation-specific error rules and frontend error-surfacing are decided in **ADR 0010** (P4-1) and implemented in P4-4; the standing requirement is that the frontend **surfaces API errors meaningfully — no silent failures**.
+- Define the structured 4xx error shape **once** in `packages/api-types` (a single `ApiError` type; plain TS today, Zod schema in P5-3); the API returns it for validation failures and unknown resources.
+- Detailed API conventions (status codes, response envelope) are in **ADR 0009**. Validation rules and frontend error-surfacing are in **ADR 0010** (accepted; Phase 4 done). The standing requirement is that the frontend **surfaces API errors meaningfully — no silent failures**.
 
 ## Other
 

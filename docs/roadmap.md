@@ -45,7 +45,7 @@
 
 Per-step design decisions (UI library, state library, exact REST paths) are made at implementation time, not upfront.
 
-Phase 3 embeds validation as part of cart delivery. **Phase 4** is a separate, fine-grained track that explicitly verifies the Validation and Errors requirement end-to-end.
+Phase 3 embeds validation as part of cart delivery. **Phase 4** verified the Validation and Errors requirement end-to-end (ADR 0010; P4-1–P4-5 complete).
 
 ### Phase 4 deliverables (planned order)
 
