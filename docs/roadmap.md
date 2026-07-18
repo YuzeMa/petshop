@@ -9,7 +9,7 @@
 | ----- | -------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------- |
 | 1     | High-level architecture design   | Complete    | ADRs [0001–0008](./decisions/README.md), coding principles, context                                     |
 | 2     | Init hello-world for FE + BE     | Complete    | Monorepo, static FE, API `/health` + `/hello`, api-types skeleton, dotenv                               |
-| 3     | Shopping cart features           | In progress | Implements [`Requirement.md`](../Requirement.md); see deliverables below                                |
+| 3     | Shopping cart features           | Complete    | Implements [`Requirement.md`](../Requirement.md); see deliverables below                                |
 | 4     | Validation & error handling      | Planned     | [`Requirement.md`](../Requirement.md) § Validation and Errors (lines 59–63); P3 implements, P4 verifies |
 | 5     | Production & cloud configuration | Planned     | 12-factor env, Zod migration, CI/build-time vars (see P5-1–P5-3)                                        |
 
@@ -43,10 +43,6 @@
 12. Wire pages to APIs (P3-4d) — done
 13. Component/interaction tests (P3-6) — done
 
-**API docs** (after endpoints stabilize):
-
-14. OpenAPI spec + browsable `/docs` (P3-7) — Scalar or Swagger UI; generate from Zod after P5-3
-
 Per-step design decisions (UI library, state library, exact REST paths) are made at implementation time, not upfront.
 
 Phase 3 embeds validation as part of cart delivery. **Phase 4** is a separate, fine-grained track that explicitly verifies the Validation and Errors requirement end-to-end.
@@ -75,3 +71,4 @@ Not scheduled; captured so the current design stays compatible.
 
 - **MPA + SSR:** the SPA is intentionally page-isolated (see [ADR 0001](./decisions/0001-stack-and-rendering.md) and [ADR 0011](./decisions/0011-frontend-state-management.md)); each page could be promoted to its own Vite entry (MPA) and/or server-rendered if SEO or performance needs appear.
 - **GraphQL:** a possible API-layer alternative to REST if client query needs grow (see [ADR 0003](./decisions/0003-rest-vs-graphql.md)).
+- **OpenAPI / browsable `/docs`:** Scalar or Swagger UI for the API; was P3-7. Prefer generating from Zod after P5-3.

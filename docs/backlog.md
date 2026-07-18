@@ -7,11 +7,7 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — Frontend remaining.
-
-| ID    | Item                                         | Status  | Notes                                                                      |
-| ----- | -------------------------------------------- | ------- | -------------------------------------------------------------------------- |
-| P3-7  | OpenAPI spec + browsable API docs            | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P5-3 |
+Phase 3 complete. Next: Phase 4 — Validation & error handling (see Later).
 
 ## Later
 
@@ -89,7 +85,7 @@ Phase 3 — Frontend ([ADR 0011](./decisions/0011-frontend-state-management.md))
 | P3-4d | Wire pages to APIs                           | Done   | Add/remove/qty PATCH; BE `CartResponse` as source of truth            |
 | P3-6  | Component/interaction tests                  | Done   | Reducer/controller unit tests + page smoke (list/cart/errors/skeleton)|
 
-**Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3.
+**Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3; P3-7 OpenAPI → Future considerations.
 
 ## Future considerations
 
@@ -99,3 +95,4 @@ Not scheduled; captured so the current design stays compatible.
 | ---- | ----- |
 | MPA + SSR migration | Promote page-isolated modules to per-page Vite entries and/or server rendering if SEO/perf needs appear; see [ADR 0001](./decisions/0001-stack-and-rendering.md), [ADR 0011](./decisions/0011-frontend-state-management.md) |
 | GraphQL evaluation | Possible API-layer alternative to REST if client query needs grow; see [ADR 0003](./decisions/0003-rest-vs-graphql.md) |
+| OpenAPI + browsable `/docs` | Scalar or Swagger UI; was P3-7. Prefer generating from Zod after P5-3 |
