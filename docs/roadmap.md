@@ -10,7 +10,7 @@
 | 1     | High-level architecture design   | Complete    | ADRs [0001–0008](./decisions/README.md), coding principles, context                                     |
 | 2     | Init hello-world for FE + BE     | Complete    | Monorepo, static FE, API `/health` + `/hello`, api-types skeleton, dotenv                               |
 | 3     | Shopping cart features           | Complete    | Implements [`Requirement.md`](../Requirement.md); see deliverables below                                |
-| 4     | Validation & error handling      | Planned     | [`Requirement.md`](../Requirement.md) § Validation and Errors (lines 59–63); P3 implements, P4 verifies |
+| 4     | Validation & error handling      | Complete    | [`Requirement.md`](../Requirement.md) § Validation and Errors (lines 59–63); ADR 0010; P4-1–P4-5 done   |
 | 5     | Production & cloud configuration | Planned     | 12-factor env, Zod migration, CI/build-time vars (see P5-1–P5-3)                                        |
 
 ### Phase 3 deliverables (planned order)
@@ -51,11 +51,11 @@ Phase 3 embeds validation as part of cart delivery. **Phase 4** is a separate, f
 
 Maps to [`Requirement.md`](../Requirement.md) lines 59–63. Runs after relevant Phase 3 slices (BE after P3-3d; FE after P3-4d/P3-5).
 
-1. **Validation & errors ADR** (P4-1) — **ADR 0010**: `ApiError` shape, status codes (400 vs 404), response envelope; align with ADR 0009 and P3-2
-2. **Unknown product IDs → 4xx** (P4-2) — BE domain + route mapping; supertest asserts status + `ApiError` body
-3. **Non-positive quantities → 4xx** (P4-3) — BE request validation + domain guard; supertest for invalid quantity cases
-4. **FE error surfacing — no silent failures** (P4-4) — API client parses `ApiError`; visible user message on failed add/remove
-5. **Requirement sign-off** (P4-5) — Component tests for error paths; checklist that Requirement.md 59–63 is satisfied
+1. **Validation & errors ADR** (P4-1) — **ADR 0010** — done
+2. **Unknown product IDs → 4xx** (P4-2) — done (with P3-3c/d)
+3. **Non-positive quantities → 4xx** (P4-3) — done (with P3-3c/d)
+4. **FE error surfacing — no silent failures** (P4-4) — done (with P3-4a–P3-5)
+5. **Requirement sign-off** (P4-5) — done (FE error-path page tests; Req 59–63)
 
 ### Phase 5 deliverables (planned order)
 

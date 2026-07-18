@@ -27,9 +27,9 @@ PetCircle is a prototype shopping cart for a pet e-commerce store. Canonical req
 
 ## Current State
 
-- Phase 1 (high-level architecture design) complete: ADRs [0001–0008](./decisions/README.md) (+ [0009](./decisions/0009-api-design-conventions.md), [0013](./decisions/0013-backend-layering.md)), coding principles, roadmap, and backlog.
+- Phase 1 (high-level architecture design) complete: ADRs [0001–0008](./decisions/README.md) (+ [0009](./decisions/0009-api-design-conventions.md), [0010](./decisions/0010-validation-and-error-handling.md), [0013](./decisions/0013-backend-layering.md)), coding principles, roadmap, and backlog.
 - Phase 2 (hello-world scaffolding) complete: `apps/web` static SPA, `apps/api` with `/health` and `/hello`, `packages/api-types`, local dotenv config.
 - **Phase 3 complete** — backend + REST, frontend shopping UI (P3-0–P3-6): ADR 0011 page modules, Product List + Cart wired to Express, rough mockup UI, reducer/controller tests. OpenAPI docs deferred (was P3-7; see Future considerations in backlog/roadmap).
-- **Phase 4 planned** — dedicated validation & error-handling track for Requirement.md lines 59–63 (P4-1–P4-5). Phase 3 embeds validation in cart work; Phase 4 explicitly verifies the requirement end-to-end.
-- **Phase 5 planned** — production & cloud configuration (P5-1, P5-2); was Phase 4.
+- **Phase 4 complete** — validation & errors ([ADR 0010](./decisions/0010-validation-and-error-handling.md)); Req 59–63 covered in BE + FE with error-path page tests (P4-1–P4-5).
+- **Phase 5 planned** — production & cloud configuration (P5-1–P5-3).
 - Per-step design decisions (UI library) are deferred until each backlog item is built; frontend state management is now decided ([ADR 0011](./decisions/0011-frontend-state-management.md)).

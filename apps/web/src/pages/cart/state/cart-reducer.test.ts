@@ -58,4 +58,18 @@ describe('cartReducer', () => {
     expect(hasPendingMutations(done)).toBe(false);
     expect(done.list.data?.grandTotal).toBe(0);
   });
+
+  it('stores mutation error on the list channel', () => {
+    const loaded = cartReducer(initialCartState, {
+      type: 'LOAD_SUCCESS',
+      cart: sampleCart,
+    });
+    const next = cartReducer(loaded, {
+      type: 'MUTATION_ERROR',
+      productId: 'prod-001',
+      error: 'Quantity must be a positive integer',
+    });
+    expect(next.mutations['prod-001']).toBe('error');
+    expect(next.list.error).toBe('Quantity must be a positive integer');
+  });
 });

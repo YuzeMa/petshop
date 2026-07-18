@@ -7,19 +7,9 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 complete. Next: Phase 4 — Validation & error handling (see Later).
+Phase 4 complete. Next: Phase 5 — Production & cloud configuration (see Later).
 
 ## Later
-
-Phase 4 — Validation & error handling ([`Requirement.md`](../Requirement.md) lines 59–63). P3 implements; P4 verifies explicitly.
-
-| ID   | Item                                    | Status  | Notes                                                                                                  |
-| ---- | --------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| P4-1 | Validation & errors ADR (0010)          | Planned | `ApiError` shape, 400 vs 404, response envelope; align with ADR 0009 and P3-2; depends on P3-1, P3-2   |
-| P4-2 | Unknown product ID → 4xx                | Planned | BE domain + route mapping; supertest status + `ApiError` body; depends on P3-3d                        |
-| P4-3 | Non-positive quantity → 4xx             | Planned | BE domain guard + request validation; supertest for `quantity <= 0`; depends on P3-3d                  |
-| P4-4 | FE error surfacing — no silent failures | Planned | API client parses `ApiError`; error banner on failed add/remove; depends on P3-4a, P3-5                |
-| P4-5 | Requirement sign-off                    | Planned | Component tests for error paths; checklist Requirement.md 59–63 satisfied; depends on P4-2, P4-3, P4-4 |
 
 Phase 5 — Production & cloud configuration.
 
@@ -30,6 +20,16 @@ Phase 5 — Production & cloud configuration.
 | P5-3 | Zod + api-types migration              | Planned | Add `zod`; schemas + `z.infer`; Vitest schema tests; wire `.parse()` at API boundary; was Zod P3-2           |
 
 ## Done
+
+Phase 4 — Validation & error handling ([`Requirement.md`](../Requirement.md) lines 59–63).
+
+| ID   | Item                                    | Status | Notes                                                                                                  |
+| ---- | --------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------ |
+| P4-1 | Validation & errors ADR (0010)          | Done   | ApiError shape, 400 vs 404, domain→HTTP, FE ErrorBanner; aligns ADR 0009 + api-types                   |
+| P4-2 | Unknown product ID → 4xx                | Done   | Domain `NotFoundError` → 404 ApiError; unit + supertest (delivered with P3-3c/d)                       |
+| P4-3 | Non-positive quantity → 4xx             | Done   | Domain + route → 400 `VALIDATION_ERROR`; unit + supertest (delivered with P3-3c/d)                     |
+| P4-4 | FE error surfacing — no silent failures | Done   | `ApiRequestError` parse; ErrorBanner on load/add/remove/qty (delivered with P3-4a–P3-5)                |
+| P4-5 | Requirement sign-off                    | Done   | FE error-path page tests; Req 59–63 satisfied per ADR 0010                                             |
 
 Phase 1 — High-level architecture design.
 

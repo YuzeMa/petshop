@@ -19,6 +19,7 @@ export function CartLine({
   onRemove,
 }: CartLineProps) {
   const pending = mutation === 'pending';
+  // Keep − enabled at qty 1 so decrement can hit BE validation and surface the error banner.
   // const minusDisabled = pending || line.quantity <= 1;
 
   return (
@@ -36,7 +37,7 @@ export function CartLine({
           <button
             type="button"
             aria-label={`Decrease quantity of ${line.name}`}
-            // disabled={minusDisabled} disable for now 
+            // disabled={minusDisabled}
             onClick={() => {
               onDecrement(line.productId, line.quantity - 1);
             }}

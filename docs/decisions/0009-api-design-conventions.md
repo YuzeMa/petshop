@@ -16,4 +16,4 @@
   - Thin routes: resolve cart id → call services → map entities to `api-types` DTOs.
   - FE can omit cart id; swapping to cookies is localized to `resolveCurrentCartId`.
   - A real DB adapter plugs in at `createPersistence()` without changing route contracts.
-  - Detailed validation ADR remains [0010](README.md) (P4-1); this ADR locks the wire shape used by P3-3d.
+  - Validation and error-handling detail is recorded in [ADR 0010](0010-validation-and-error-handling.md); this ADR locks the wire shape used by P3-3d.
