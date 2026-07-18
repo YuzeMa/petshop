@@ -24,9 +24,9 @@ packages/
 ## Strong typing
 
 - `strict: true` in a root base `tsconfig`, extended per workspace. Also enable `noUncheckedIndexedAccess`.
-- **Ban `any`** (enforced via ESLint when P2-2a lands). Prefer precise types and inference.
+- **Ban `any`** (enforced via ESLint when P3-0 lands). Prefer precise types and inference.
 - **Hello phase:** plain TypeScript types in `packages/api-types` (no runtime validation yet).
-- **Planned (backlog P2-8):** runtime validation at the HTTP boundary with **Zod**; derive TypeScript types from schemas (`z.infer`) so api-types has one source of truth.
+- **Planned (backlog P3-2):** runtime validation at the HTTP boundary with **Zod**; derive TypeScript types from schemas (`z.infer`) so api-types has one source of truth.
 - See [ADR 0005](./decisions/0005-repository-and-build-tooling.md).
 
 ## Testing
@@ -39,8 +39,8 @@ packages/
 
 ## Error Handling
 
-- Define the structured 4xx error shape **once** in `packages/api-types` (a single `ApiError` type; Zod schema when P2-8 lands); the API returns it for validation failures and unknown resources.
-- Detailed API conventions (status codes, response envelope) and the frontend error-surfacing mechanism are decided in a later feature phase; the standing requirement is that the frontend **surfaces API errors meaningfully — no silent failures**.
+- Define the structured 4xx error shape **once** in `packages/api-types` (a single `ApiError` type; Zod schema when P3-2 lands); the API returns it for validation failures and unknown resources.
+- Detailed API conventions (status codes, response envelope) are decided in **ADR 0009** (P3-1). Validation-specific error rules and frontend error-surfacing are decided in **ADR 0010** (P4-1) and implemented in P4-4; the standing requirement is that the frontend **surfaces API errors meaningfully — no silent failures**.
 
 ## Other
 
