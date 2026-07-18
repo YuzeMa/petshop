@@ -1,0 +1,14 @@
+{
+  "name": "petcircle",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @petcircle/web dev",
+    "build:web": "pnpm --filter @petcircle/web build",
+    "test:web": "pnpm --filter @petcircle/web test"
+  }
+}
