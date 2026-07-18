@@ -6,4 +6,4 @@
 <!-- Add terms when needed. Do not pre-fill. -->
 
 | Term | Definition | See also |
-|------|------------|----------|
+| ---- | ---------- | -------- |

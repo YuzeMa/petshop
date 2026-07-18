@@ -7,77 +7,83 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — Foundations.
+Phase 3 — Backend (domain-first).
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P3-0 | ESLint + Prettier at repo root | Planned | Ban `any`, shared lint/format; was P2-2a; can run in parallel with P3-1/P3-2 |
-| P3-1 | API design conventions ADR (0009) | Planned | Resource paths, status codes, response envelope |
-| P3-2 | Zod + api-types DTOs + `ApiError` | Planned | Product, cart, structured error shapes; absorbs ex-P2-8 |
+| ID    | Item                              | Status  | Notes                                                   |
+| ----- | --------------------------------- | ------- | ------------------------------------------------------- |
+| P3-3a | Domain entities                   | Planned | `Product`, `Cart`, `CartItem` in `apps/api/src/domain/` |
+| P3-3b | Seed data + repository interfaces | Planned | 6–10 products, ≥3 categories; in-memory repos           |
+| P3-3c | Cart domain logic + unit tests    | Planned | Add/increment/remove, totals, validation rules          |
 
 ## Next
 
-Phase 3 — Backend (domain-first).
+Phase 3 — API prep + endpoints (before and including P3-3d).
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P3-3a | Domain entities | Planned | `Product`, `Cart`, `CartItem` in `apps/api/src/domain/` |
-| P3-3b | Seed data + repository interfaces | Planned | 6–10 products, ≥3 categories; in-memory repos |
-| P3-3c | Cart domain logic + unit tests | Planned | Add/increment/remove, totals, validation rules |
-| P3-3d | REST endpoints + integration tests | Planned | Requirement.md APIs; supertest happy paths + 4xx |
+| ID    | Item                                 | Status  | Notes                                                                 |
+| ----- | ------------------------------------ | ------- | --------------------------------------------------------------------- |
+| P3-1  | API design conventions ADR (0009)    | Planned | Paths, status codes, response envelope; decide when building REST API |
+| P3-2  | Plain TS api-types DTOs + `ApiError` | Planned | Product, cart, error wire types; no Zod; after P3-1, before P3-3d     |
+| P3-3d | REST endpoints + integration tests   | Planned | Requirement.md APIs; supertest happy paths + 4xx                      |
 
 ## Later
 
 Phase 3 — Frontend.
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P3-4a | API fetch layer + FE↔BE smoke | Planned | `apps/web/src/api/`; prove CORS via `GET /hello`; ex-P2-7 |
-| P3-4b | UI components | Planned | Product card, cart line, totals, error banner |
-| P3-4c | Pages + routing | Planned | Product List Page, Cart View |
-| P3-5 | State management ADR (0011) + implementation | Planned | Surface errors (no silent failures); decide library at this step |
-| P3-4d | Wire pages to APIs | Planned | Add/remove flows, cart updates |
-| P3-6 | Component/interaction tests | Planned | List rendering, add/remove, error surfacing |
-| P3-7 | OpenAPI spec + browsable API docs | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P3-2 |
+| ID    | Item                                         | Status  | Notes                                                                      |
+| ----- | -------------------------------------------- | ------- | -------------------------------------------------------------------------- |
+| P3-4a | API fetch layer + FE↔BE smoke                | Planned | `apps/web/src/api/`; prove CORS via `GET /hello`; ex-P2-7                  |
+| P3-4b | UI components                                | Planned | Product card, cart line, totals, error banner                              |
+| P3-4c | Pages + routing                              | Planned | Product List Page, Cart View                                               |
+| P3-5  | State management ADR (0011) + implementation | Planned | Surface errors (no silent failures); decide library at this step           |
+| P3-4d | Wire pages to APIs                           | Planned | Add/remove flows, cart updates                                             |
+| P3-6  | Component/interaction tests                  | Planned | List rendering, add/remove, error surfacing                                |
+| P3-7  | OpenAPI spec + browsable API docs            | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P5-3 |
 
 Phase 4 — Validation & error handling ([`Requirement.md`](../Requirement.md) lines 59–63). P3 implements; P4 verifies explicitly.
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P4-1 | Validation & errors ADR (0010) | Planned | `ApiError` shape, 400 vs 404, response envelope; align with ADR 0009 and P3-2; depends on P3-1, P3-2 |
-| P4-2 | Unknown product ID → 4xx | Planned | BE domain + route mapping; supertest status + `ApiError` body; depends on P3-3d |
-| P4-3 | Non-positive quantity → 4xx | Planned | BE Zod + domain guard; supertest for `quantity <= 0`, missing quantity; depends on P3-3d |
-| P4-4 | FE error surfacing — no silent failures | Planned | API client parses `ApiError`; error banner on failed add/remove; depends on P3-4a, P3-5 |
-| P4-5 | Requirement sign-off | Planned | Component tests for error paths; checklist Requirement.md 59–63 satisfied; depends on P4-2, P4-3, P4-4 |
+| ID   | Item                                    | Status  | Notes                                                                                                  |
+| ---- | --------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------ |
+| P4-1 | Validation & errors ADR (0010)          | Planned | `ApiError` shape, 400 vs 404, response envelope; align with ADR 0009 and P3-2; depends on P3-1, P3-2   |
+| P4-2 | Unknown product ID → 4xx                | Planned | BE domain + route mapping; supertest status + `ApiError` body; depends on P3-3d                        |
+| P4-3 | Non-positive quantity → 4xx             | Planned | BE domain guard + request validation; supertest for `quantity <= 0`; depends on P3-3d                  |
+| P4-4 | FE error surfacing — no silent failures | Planned | API client parses `ApiError`; error banner on failed add/remove; depends on P3-4a, P3-5                |
+| P4-5 | Requirement sign-off                    | Planned | Component tests for error paths; checklist Requirement.md 59–63 satisfied; depends on P4-2, P4-3, P4-4 |
 
 Phase 5 — Production & cloud configuration.
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P5-1 | ADR 0012 + API `loadConfig()` with Zod | Planned | 12-factor precedence, fail-fast validation, `env.test.ts`; was P4-1 |
-| P5-2 | Production & cloud env wiring | Planned | CI `VITE_*` for web builds; platform env for API deploy; no `.env` in prod images; depends on P5-1; was P4-2 |
+| ID   | Item                                   | Status  | Notes                                                                                                        |
+| ---- | -------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| P5-1 | ADR 0012 + API `loadConfig()` with Zod | Planned | 12-factor precedence, fail-fast validation, `env.test.ts`; was P4-1                                          |
+| P5-2 | Production & cloud env wiring          | Planned | CI `VITE_*` for web builds; platform env for API deploy; no `.env` in prod images; depends on P5-1; was P4-2 |
+| P5-3 | Zod + api-types migration              | Planned | Add `zod`; schemas + `z.infer`; Vitest schema tests; wire `.parse()` at API boundary; was Zod P3-2           |
 
 ## Done
 
 Phase 1 — High-level architecture design.
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P1-1 | ADRs 0001–0008 | Done | Stack/rendering, type boundary, REST vs GraphQL, server framework, tooling, testing, styling, CORS |
-| P1-2 | Update coding-principles.md | Done | Architecture, strong typing, testing, error handling |
-| P1-3 | Update context.md | Done | Background, goals, non-goals, cart-scoping assumption |
-| P1-4 | Update roadmap.md + backlog.md | Done | Phase breakdown recorded |
+| ID   | Item                           | Status | Notes                                                                                              |
+| ---- | ------------------------------ | ------ | -------------------------------------------------------------------------------------------------- |
+| P1-1 | ADRs 0001–0008                 | Done   | Stack/rendering, type boundary, REST vs GraphQL, server framework, tooling, testing, styling, CORS |
+| P1-2 | Update coding-principles.md    | Done   | Architecture, strong typing, testing, error handling                                               |
+| P1-3 | Update context.md              | Done   | Background, goals, non-goals, cart-scoping assumption                                              |
+| P1-4 | Update roadmap.md + backlog.md | Done   | Phase breakdown recorded                                                                           |
 
 Phase 2 — hello-world scaffolding.
 
-| ID | Item | Status | Notes |
-|----|------|--------|-------|
-| P2-1 | pnpm workspaces setup | Done | Root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`, `.nvmrc` |
-| P2-2 | Shared tooling (Vitest) | Done | Vitest in `apps/web` and `apps/api`; ESLint/Prettier moved to P3-0 |
-| P2-3 | `apps/api` hello | Done | Express + TS `/health` and `/hello`, CORS allowlist, supertest |
-| P2-4 | `apps/web` hello (static) | Done | Vite + React + CSS Modules + Vitest smoke test; API client deferred to P3-4a |
-| P2-5 | `packages/api-types` skeleton | Done | Plain TS `HealthResponse` and `HelloResponse`; workspace exports |
-| P2-6 | Root README | Done | Install, dev, build, test for web and api |
-| P2-9 | Local API `.env` via dotenv | Done | dotenv at boot; optional `.env` from `.env.example`; code defaults fallback |
+| ID   | Item                          | Status | Notes                                                                        |
+| ---- | ----------------------------- | ------ | ---------------------------------------------------------------------------- |
+| P2-1 | pnpm workspaces setup         | Done   | Root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`, `.nvmrc`   |
+| P2-2 | Shared tooling (Vitest)       | Done   | Vitest in `apps/web` and `apps/api`; ESLint/Prettier in P3-0                 |
+| P2-3 | `apps/api` hello              | Done   | Express + TS `/health` and `/hello`, CORS allowlist, supertest               |
+| P2-4 | `apps/web` hello (static)     | Done   | Vite + React + CSS Modules + Vitest smoke test; API client deferred to P3-4a |
+| P2-5 | `packages/api-types` skeleton | Done   | Plain TS `HealthResponse` and `HelloResponse`; workspace exports             |
+| P2-6 | Root README                   | Done   | Install, dev, build, test for web and api                                    |
+| P2-9 | Local API `.env` via dotenv   | Done   | dotenv at boot; optional `.env` from `.env.example`; code defaults fallback  |
 
-**Moved to Phase 3:** P2-7 → P3-4a (FE↔BE smoke); P2-8 → P3-2 (Zod with cart DTOs); P2-2a → P3-0 (ESLint + Prettier).
+Phase 3 — foundations.
+
+| ID   | Item                           | Status | Notes                                                                              |
+| ---- | ------------------------------ | ------ | ---------------------------------------------------------------------------------- |
+| P3-0 | ESLint + Prettier at repo root | Done   | `eslint.config.js`, `.prettierrc`; `lint` / `format` scripts; ban `any`; was P2-2a |
+
+**Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3; P3-1/P3-2 deferred to before P3-3d.

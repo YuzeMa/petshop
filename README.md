@@ -17,6 +17,17 @@ Architecture and decisions: [`docs/INDEX.md`](docs/INDEX.md)
 pnpm install
 ```
 
+## Code quality
+
+From the **repository root**:
+
+```bash
+pnpm lint           # ESLint
+pnpm lint:fix       # ESLint with auto-fix
+pnpm format:check   # Prettier check
+pnpm format         # Prettier write
+```
+
 ## Frontend (hello world)
 
 Run from the **repository root**:

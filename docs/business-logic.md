@@ -9,5 +9,5 @@ Canonical requirements: [`Requirement.md`](../Requirement.md)
 
 ## Rules
 
-| ID | Rule | Notes |
-|----|------|-------|
+| ID  | Rule | Notes |
+| --- | ---- | ----- |
