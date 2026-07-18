@@ -36,12 +36,12 @@
 
 **Frontend** (after backend endpoints exist):
 
-8. API fetch layer + FE↔BE smoke — ex-P2-7 folded in (P3-4a)
-9. UI components (P3-4b)
-10. Pages + routing — Product List, Cart View (P3-4c)
-11. State management ADR + implementation (P3-5) — **ADR 0011** — ADR decided (per-page React Context + `useReducer`); implementation pending
-12. Wire pages to APIs (P3-4d)
-13. Component/interaction tests (P3-6)
+8. API fetch layer + FE↔BE smoke — ex-P2-7 folded in (P3-4a) — done
+9. UI components (P3-4b) — done
+10. Pages + routing — Product List, Cart View (P3-4c) — done
+11. State management ADR + implementation (P3-5) — **ADR 0011** — done
+12. Wire pages to APIs (P3-4d) — done
+13. Component/interaction tests (P3-6) — done
 
 **API docs** (after endpoints stabilize):
 

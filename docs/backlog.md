@@ -7,16 +7,10 @@ Phases are defined in [`roadmap.md`](./roadmap.md).
 
 ## Now
 
-Phase 3 — Frontend.
+Phase 3 — Frontend remaining.
 
 | ID    | Item                                         | Status  | Notes                                                                      |
 | ----- | -------------------------------------------- | ------- | -------------------------------------------------------------------------- |
-| P3-4a | API fetch layer + FE↔BE smoke                | Planned | `apps/web/src/api/`; prove CORS via `GET /hello`; ex-P2-7                  |
-| P3-4b | UI components                                | Planned | Product card, cart line, totals, error banner                              |
-| P3-4c | Pages + routing                              | Planned | Product List Page, Cart View                                               |
-| P3-5  | State management implementation (ADR 0011)   | Planned | ADR 0011 **accepted** (per-page React Context + `useReducer`, thunk controllers); implement providers/reducers/controllers; surface errors (no silent failures) |
-| P3-4d | Wire pages to APIs                           | Planned | Add/remove flows, cart updates                                             |
-| P3-6  | Component/interaction tests                  | Planned | List rendering, add/remove, error surfacing                                |
 | P3-7  | OpenAPI spec + browsable API docs            | Planned | After P3-3d; Scalar or Swagger UI at `/docs`; generate from Zod after P5-3 |
 
 ## Later
@@ -83,6 +77,17 @@ Phase 3 — API prep + REST ([ADR 0009](./decisions/0009-api-design-conventions.
 | P3-1  | API design conventions ADR (0009)    | Done   | Paths, ApiError, current-cart resolver, in-memory seed-on-boot        |
 | P3-2  | Plain TS api-types DTOs + `ApiError` | Done   | Product, cart, error wire types; no Zod                               |
 | P3-3d | REST endpoints + integration tests   | Done   | `/products`, `/cart`, add/remove; supertest usage + 4xx scenarios     |
+
+Phase 3 — Frontend ([ADR 0011](./decisions/0011-frontend-state-management.md)).
+
+| ID    | Item                                         | Status | Notes                                                                 |
+| ----- | -------------------------------------------- | ------ | --------------------------------------------------------------------- |
+| P3-4a | API fetch layer + FE↔BE smoke                | Done   | `shared/http` transport; `shared/api` resource clients; controllers in `shared/controller` |
+| P3-4b | UI components                                | Done   | Product card grid, cart line (+/−/Delete), total skeleton, error banner |
+| P3-4c | Pages + routing                              | Done   | react-router; `/` products, `/cart`; AppShell nav                     |
+| P3-5  | State management implementation (ADR 0011)   | Done   | Per-page Context + `useReducer`; thunk controllers in `shared/controller`; sole dispatcher |
+| P3-4d | Wire pages to APIs                           | Done   | Add/remove/qty PATCH; BE `CartResponse` as source of truth            |
+| P3-6  | Component/interaction tests                  | Done   | Reducer/controller unit tests + page smoke (list/cart/errors/skeleton)|
 
 **Moved:** P2-7 → P3-4a; P2-8 Zod → P5-3.
 

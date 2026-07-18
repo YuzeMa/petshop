@@ -41,19 +41,16 @@ Standing rules for `apps/web`; full rationale in [ADR 0011](./decisions/0011-fro
 ```text
 apps/web/src/
   shared/
-    api/            http client, ApiError parsing, base URL (VITE_API_BASE_URL)
-    types/          cross-page view-model types
+    http/           fetch wrapper, ApiError parsing, base URL (VITE_API_BASE_URL)
+    api/            resource clients (products-api, cart-api) — reusable across pages
+    controller/     thunk controllers + DTO→view-model mappers (sole dispatcher)
     ui/             shared presentational primitives
   pages/
     products/
-      api/          product API calls
-      controller/   thunk-style controller (dispatch, api) - sole dispatcher
       state/        reducer + Context provider (useReducer)
       components/   presentational
       ProductListPage.tsx
     cart/
-      api/          cart API calls
-      controller/   thunk-style controller (dispatch, api) - sole dispatcher
       state/        reducer + Context provider (useReducer)
       components/   presentational
       CartPage.tsx
@@ -61,6 +58,7 @@ apps/web/src/
   main.tsx
 ```
 
+- **Shared vs page:** HTTP transport lives in `shared/http`. Resource APIs and controllers live in `shared/api` and `shared/controller` so product/cart logic can be reused outside a single page. Each page keeps only UI, components, and its mounted `state/` provider.
 - **Routing & isolation:** SPA with `react-router`; each page is a self-contained module under `pages/` so it can later be promoted to its own Vite entry (MPA) or SSR-rendered.
 - **State container:** React Context + `useReducer`, one provider per page. No Redux, no external store. State lives in the reducer; the provider exposes `{ state, controller }` (not raw `dispatch`) and mounts at the page root, so each page/request gets its own instance (no singleton).
 - **Unidirectional flow:** View → Controller → Reducer (via `useReducer`) → state through Context → View.
